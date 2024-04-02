@@ -2,8 +2,8 @@ import React from "react";
 
 const Header = () => {
   return (
-    <div className="flex justify-between p-2 bg-todoVeryDarkBlue">
-      <div className="font-extrabold text-lg text-white">My Todo</div>
+    <div className="flex justify-between py-4 px-8 items-center bg-todoVeryDarkBlue">
+      <div className="font-extrabold text-2xl text-white">My Todo</div>
       <div className="font-medium text-base text-todoLightGrayishBlue">All</div>
     </div>
   );
