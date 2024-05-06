@@ -1,63 +1,45 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
+
+import CardListing from "./CardListing";
+import axios from "axios";
 
 const TodoList = () => {
-  const dummyArr = [
-    {
-      id: 1,
-      title: "Title 1",
-      status: "in-progress",
-    },
-    {
-      id: 2,
-      title: "Title 2",
-      status: "todo",
-    },
-    {
-      id: 3,
-      title: "Title 3",
-      status: "in-progress",
-    },
-    {
-      id: 4,
-      title: "Title 4",
-      status: "completed",
-    },
-    {
-      id: 5,
-      title: "Title 5",
-      status: "todo",
-    },
-    {
-      id: 6,
-      title: "Title 6",
-      status: "todo",
-    },
-    {
-      id: 7,
-      title: "Title 7",
-      status: "completed",
-    },
-  ];
+  const [todoArray, setTodoArray] = useState([]);
+
+  const getData = async () => {
+    const { data } = await axios.get("/api/get-todos");
+    setTodoArray(data);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
-    <div>
-      <table className="w-full">
+    <div className="px-10 py-4">
+      <table className="hidden lg:table w-full">
         <thead>
           <tr className="text-xl text-todoVeryDarkGrayishBlue2">
-            <th>#</th>
+            {/* <th>#</th> */}
             <th>Title</th>
+            <th>Description</th>
             <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          {dummyArr.map((todo: any) => (
-            <tr key={todo.id}>
-              <td className="text-center">{todo.id}</td>
+          {todoArray.map((todo: any) => (
+            <tr key={todo._id}>
               <td>{todo.title}</td>
+              <td>{todo.description}</td>
               <td>{todo.status}</td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      <CardListing todoList={todoArray} />
     </div>
   );
 };
