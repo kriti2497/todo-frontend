@@ -3,26 +3,17 @@
 import React, { useEffect, useState } from "react";
 
 import CardListing from "./CardListing";
-import axios from "axios";
 
-const TodoList = () => {
-  const [todoArray, setTodoArray] = useState([]);
-
-  const getData = async () => {
-    const { data } = await axios.get("/api/get-todos");
-    setTodoArray(data);
-  };
-
+const TodoList = ({ getData, todoArray }: any) => {
   useEffect(() => {
     getData();
-  }, []);
+  }, [todoArray]);
 
   return (
     <div className="px-10 py-4">
       <table className="hidden lg:table w-full">
         <thead>
           <tr className="text-xl text-todoVeryDarkGrayishBlue2">
-            {/* <th>#</th> */}
             <th>Title</th>
             <th>Description</th>
             <th>Status</th>
@@ -30,10 +21,10 @@ const TodoList = () => {
         </thead>
         <tbody>
           {todoArray.map((todo: any) => (
-            <tr key={todo._id}>
-              <td>{todo.title}</td>
-              <td>{todo.description}</td>
-              <td>{todo.status}</td>
+            <tr key={todo._id} className="leading-10 hover:bg-gray-400 mb-2">
+              <td className="pl-4 pr-2">{todo.title}</td>
+              <td className="px-2">{todo.description}</td>
+              <td className="pl-2 pr-4">{todo.status}</td>
             </tr>
           ))}
         </tbody>

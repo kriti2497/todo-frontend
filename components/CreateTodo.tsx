@@ -1,48 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 
-import axios from "axios";
+interface CreateTodoProps {
+  todoTitle: string;
+  setTodoTitle: (arg: string) => void;
+  titleErr: boolean;
+  setTitleErr: (arg: boolean) => void;
+  todoDescription: string;
+  setTodoDescription: (arg: string) => void;
+  descriptionErr: boolean;
+  setDescriptionErr: (arg: boolean) => void;
+  createTodo: () => void;
+}
 
-const CreateTodo = () => {
-  const [todoTitle, setTodoTitle] = useState("");
-  const [todoDescription, setTodoDescription] = useState("");
-  const [titleErr, setTitleErr] = useState(false);
-  const [descriptionErr, setDescriptionErr] = useState(false);
-
-  const createTodo = async () => {
-    if (
-      (todoTitle === "" || todoTitle.trim() === "") &&
-      (todoDescription === "" || todoDescription.trim() === "")
-    ) {
-      setTitleErr(true);
-      setDescriptionErr(true);
-      return;
-    }
-
-    if (todoTitle === "" || todoTitle.trim() === "") {
-      setTitleErr(true);
-      return;
-    }
-
-    if (todoDescription === "" || todoDescription.trim() === "") {
-      setDescriptionErr(true);
-      return;
-    }
-
-    try {
-      const response = await axios.post("/api/create-todo", {
-        title: todoTitle,
-        description: todoDescription,
-      });
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-    console.log("create todo");
-    await axios.post("/api/get-todos");
-  };
-
+const CreateTodo: React.FC<CreateTodoProps> = ({
+  todoTitle,
+  setTodoTitle,
+  titleErr,
+  setTitleErr,
+  todoDescription,
+  setTodoDescription,
+  descriptionErr,
+  setDescriptionErr,
+  createTodo,
+}) => {
   return (
     <div className="px-10 py-4">
       <div className="flex justify-between items-center w-full">
