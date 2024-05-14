@@ -12,6 +12,7 @@ export default function Home() {
   const [titleErr, setTitleErr] = useState(false);
   const [descriptionErr, setDescriptionErr] = useState(false);
   const [todoArray, setTodoArray] = useState([]);
+  const [todoBtnTitle, setTodoBtnTitle] = useState("Create");
 
   const createTodo = async () => {
     if (
@@ -47,6 +48,12 @@ export default function Home() {
     console.log("create todo");
   };
 
+  const clearTodo = () => {
+    setTodoBtnTitle("Create");
+    setTodoTitle("");
+    setTodoDescription("");
+  };
+
   const getData = async () => {
     const { data } = await axios.get("/api/get-todos");
     setTodoArray(data);
@@ -55,6 +62,7 @@ export default function Home() {
     <>
       <Header />
       <CreateTodo
+        todoBtnTitle={todoBtnTitle}
         createTodo={createTodo}
         todoTitle={todoTitle}
         setTodoTitle={setTodoTitle}
@@ -64,8 +72,15 @@ export default function Home() {
         titleErr={titleErr}
         descriptionErr={descriptionErr}
         setDescriptionErr={setDescriptionErr}
+        clearTodo={clearTodo}
       />
-      <TodoList getData={getData} todoArray={todoArray} />
+      <TodoList
+        getData={getData}
+        todoArray={todoArray}
+        setTodoTitle={setTodoTitle}
+        setTodoDescription={setTodoDescription}
+        setTodoBtnTitle={setTodoBtnTitle}
+      />
     </>
   );
 }
