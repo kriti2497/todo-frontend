@@ -11,9 +11,10 @@ interface CreateTodoProps {
   setTodoDescription: (arg: string) => void;
   descriptionErr: boolean;
   setDescriptionErr: (arg: boolean) => void;
-  createTodo: () => void;
+  createUpdateTodo: (arg: string, id?: string) => void;
   clearTodo: () => void;
   todoBtnTitle: string;
+  selectedTodoId: string;
 }
 
 const CreateTodo: React.FC<CreateTodoProps> = ({
@@ -25,9 +26,10 @@ const CreateTodo: React.FC<CreateTodoProps> = ({
   setTodoDescription,
   descriptionErr,
   setDescriptionErr,
-  createTodo,
+  createUpdateTodo,
   clearTodo,
   todoBtnTitle,
+  selectedTodoId,
 }) => {
   return (
     <div className="px-10 py-4">
@@ -70,7 +72,14 @@ const CreateTodo: React.FC<CreateTodoProps> = ({
             )}
           </div>
           <button
-            onClick={createTodo}
+            onClick={() =>
+              createUpdateTodo(
+                todoBtnTitle === "Create" ? "create" : "update",
+                todoBtnTitle === "Update" && selectedTodoId
+                  ? selectedTodoId
+                  : ""
+              )
+            }
             className="bg-todoVeryDesaturatedBlue text-white px-4 py-2 rounded-md w-full md:w-auto"
           >
             {todoBtnTitle}

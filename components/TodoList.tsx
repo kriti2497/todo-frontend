@@ -10,6 +10,7 @@ const TodoList = ({
   setTodoTitle,
   setTodoDescription,
   setTodoBtnTitle,
+  setSelectedTodoId,
 }: any) => {
   const statusObj: any = {
     todo: "Todo",
@@ -18,13 +19,14 @@ const TodoList = ({
   };
   useEffect(() => {
     getData();
-  }, [todoArray]);
+  }, []);
 
   const printStatus = (status: string) => {
     return statusObj[status];
   };
 
   const populateData = (todoId: string) => {
+    setSelectedTodoId(todoId);
     setTodoBtnTitle("Update");
     const dataToUpdate = todoArray.filter((each: any) => each._id === todoId);
     setTodoTitle(dataToUpdate[0].title);
@@ -76,6 +78,7 @@ const TodoList = ({
                     </g>
                   </svg>
                   <svg
+                    // onClick={}
                     width="20px"
                     height="20px"
                     viewBox="0 0 24 24"

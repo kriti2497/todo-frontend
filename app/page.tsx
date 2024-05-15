@@ -11,10 +11,12 @@ export default function Home() {
   const [todoDescription, setTodoDescription] = useState("");
   const [titleErr, setTitleErr] = useState(false);
   const [descriptionErr, setDescriptionErr] = useState(false);
+  const [selectedTodoId, setSelectedTodoId] = useState("");
   const [todoArray, setTodoArray] = useState([]);
   const [todoBtnTitle, setTodoBtnTitle] = useState("Create");
 
-  const createTodo = async () => {
+  const createUpdateTodo = async (actionType: string, id?: string) => {
+    console.log(actionType, id);
     if (
       (todoTitle === "" || todoTitle.trim() === "") &&
       (todoDescription === "" || todoDescription.trim() === "")
@@ -35,17 +37,26 @@ export default function Home() {
     }
 
     try {
-      const response = await axios.post("/api/create-todo", {
-        title: todoTitle,
-        description: todoDescription,
-      });
-      console.log(response);
+      if (actionType === "create") {
+        console.log("create todo");
+        const response = await axios.post("/api/create-todo", {
+          title: todoTitle,
+          description: todoDescription,
+        });
+      } else {
+        console.log("update todo");
+        const response = await axios.put(`/api/update-todo/${id}`, {
+          ...(todoTitle && { title: todoTitle }),
+          ...(todoDescription && { description: todoDescription }),
+        });
+        console.log(response);
+      }
+      getData();
       setTodoTitle("");
       setTodoDescription("");
     } catch (error) {
       console.log(error);
     }
-    console.log("create todo");
   };
 
   const clearTodo = () => {
@@ -63,7 +74,7 @@ export default function Home() {
       <Header />
       <CreateTodo
         todoBtnTitle={todoBtnTitle}
-        createTodo={createTodo}
+        createUpdateTodo={createUpdateTodo}
         todoTitle={todoTitle}
         setTodoTitle={setTodoTitle}
         setTodoDescription={setTodoDescription}
@@ -73,6 +84,7 @@ export default function Home() {
         descriptionErr={descriptionErr}
         setDescriptionErr={setDescriptionErr}
         clearTodo={clearTodo}
+        selectedTodoId={selectedTodoId}
       />
       <TodoList
         getData={getData}
@@ -80,6 +92,7 @@ export default function Home() {
         setTodoTitle={setTodoTitle}
         setTodoDescription={setTodoDescription}
         setTodoBtnTitle={setTodoBtnTitle}
+        setSelectedTodoId={setSelectedTodoId}
       />
     </>
   );
