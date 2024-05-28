@@ -12,7 +12,7 @@ const nextConfig = {
       // },
       {
         source: "/api/:path/:id*",
-        destination: "http://localhost:3001/:path/:id*", // Proxy to Backend
+        destination: "https://todo-backend-ebon-pi.vercel.app/:path/:id*", // Proxy to Backend
       },
     ];
   },
