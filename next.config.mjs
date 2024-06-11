@@ -2,17 +2,9 @@
 const nextConfig = {
   async rewrites() {
     return [
-      // {
-      //   source: "/api/:path",
-      //   destination: "http://localhost:3001/:path", // Proxy to Backend
-      // },
-      // {
-      //   source: "/api/:path/:id",
-      //   destination: "http://localhost:3001/:path/:id", // Proxy to Backend
-      // },
       {
-        source: "/api/:path/:id*",
-        destination: "https://todo-backend-ebon-pi.vercel.app/:path/:id*", // Proxy to Backend
+        source: "/api/:path*",
+        destination: "https://todo-backend-ebon-pi.vercel.app/:path*", // Proxy to Backend
       },
     ];
   },
